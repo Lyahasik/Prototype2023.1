@@ -1,19 +1,24 @@
 using UnityEngine;
 
 using Prototype.Gameplay.Player;
-using Prototype.UI.Gameplay;
+using Prototype.UI.Core;
 
 namespace Prototype.Core
 {
     public class ProcessingGame : MonoBehaviour
     {
-        [SerializeField] private PlayerMovement playerMovement;
-
         private bool _isStarted;
+
+        public static ProcessingGame Single;
+
+        private void Awake()
+        {
+            Single = this;
+        }
 
         private void OnEnable()
         {
-            TouchArea.OnTouchUp += StartGame;
+            InputController.OnTouchDown += StartGame;
         }
 
         private void StartGame()
@@ -21,15 +26,17 @@ namespace Prototype.Core
             if (_isStarted)
                 return;
             
-            playerMovement.Activate();
+            PlayerMovement.Single.Activate();
 
+            UIHandler.Single.SetPromptActive(false);
             _isStarted = true;
         }
         
-        private void OverGame()
+        public void OverGame()
         {
-            playerMovement.Reset();
+            PlayerMovement.Single.Reset();
 
+            UIHandler.Single.SetPromptActive(true);
             _isStarted = false;
         }
     }

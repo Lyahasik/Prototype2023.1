@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-using Prototype.UI.Gameplay;
+using Prototype.Core;
 
 namespace Prototype.Gameplay.Player
 {
@@ -14,15 +14,26 @@ namespace Prototype.Gameplay.Player
         [SerializeField] private float gravityMax;
         [SerializeField] private float gravityRateChange;
 
+        private Vector3 _startPosition;
+
         private float _currentGravity;
         private bool _isGravityActive;
 
         private bool _isActive;
 
+        public static PlayerMovement Single;
+
+        private void Awake()
+        {
+            Single = this;
+
+            _startPosition = transform.position;
+        }
+
         private void OnEnable()
         {
-            TouchArea.OnTouchUp += GravityOff;
-            TouchArea.OnTouchDown += GravityOn;
+            InputController.OnTouchDown += GravityOn;
+            InputController.OnTouchUp += GravityOff;
         }
 
         private void Update()
@@ -59,7 +70,9 @@ namespace Prototype.Gameplay.Player
 
         public void Reset()
         {
+            effectMovement.Clear();
             effectMovement.Stop();
+            transform.position = _startPosition;
 
             _currentGravity = 0f;
             _isActive = false;
