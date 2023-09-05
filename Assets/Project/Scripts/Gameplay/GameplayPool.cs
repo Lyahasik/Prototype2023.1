@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Prototype.Gameplay.Obstacles;
+using Prototype.Gameplay.ActiveArea;
 
 namespace Prototype.Gameplay
 {
     public class GameplayPool : MonoBehaviour
     {
-        [SerializeField] private ObstacleSquare prefabObstacle;
+        [SerializeField] private MovementInArea prefabObstacle;
         
-        private readonly Stack<ObstacleSquare> obstacles = new ();
+        private readonly Stack<MovementInArea> obstacles = new ();
 
         public static GameplayPool Single;
 
@@ -18,15 +18,15 @@ namespace Prototype.Gameplay
             Single = this;
         }
 
-        public ObstacleSquare GetObstacle()
+        public MovementInArea GetObstacle()
         {
             if (obstacles.Count == 0)
                 return Instantiate(prefabObstacle);
-
+            
             return obstacles.Pop();
         }
 
-        public void ReturnObstacle(ObstacleSquare obstacle)
+        public void ReturnObstacle(MovementInArea obstacle)
         {
             obstacle.transform.parent = transform;
             obstacle.Reset();

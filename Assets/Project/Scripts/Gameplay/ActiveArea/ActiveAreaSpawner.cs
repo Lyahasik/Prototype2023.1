@@ -1,7 +1,6 @@
 using UnityEngine;
 
 using Prototype.Core;
-using Prototype.Gameplay.Obstacles;
 
 namespace Prototype.Gameplay.ActiveArea
 {
@@ -12,6 +11,8 @@ namespace Prototype.Gameplay.ActiveArea
 
         [Space]
         [SerializeField] private Transform obstaclesParent;
+        [SerializeField] private float minShiftY;
+        [SerializeField] private float maxShiftY;
 
         private float _nextTimeSpawn;
 
@@ -26,9 +27,13 @@ namespace Prototype.Gameplay.ActiveArea
                 || _nextTimeSpawn > Time.time)
                 return;
 
-            ObstacleSquare obstacle = GameplayPool.Single.GetObstacle();
+            MovementInArea obstacle = GameplayPool.Single.GetObstacle();
             obstacle.transform.parent = obstaclesParent;
-            obstacle.Activate(transform.position);
+
+            Vector3 newPosition = transform.position;
+            newPosition.y += Random.Range(minShiftY, maxShiftY);
+            
+            obstacle.Activate(newPosition);
 
             _nextTimeSpawn = Time.time + Random.Range(minDelaySpawn, maxDelaySpawn);
         }

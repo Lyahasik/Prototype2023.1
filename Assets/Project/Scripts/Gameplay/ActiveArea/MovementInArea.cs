@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Prototype.Core;
+
 namespace Prototype.Gameplay.ActiveArea
 {
     public class MovementInArea : MonoBehaviour
@@ -7,6 +9,11 @@ namespace Prototype.Gameplay.ActiveArea
         [SerializeField] private float speedMove;
         
         private bool _isActive;
+        
+        private void OnEnable()
+        {
+            ProcessingGame.OnOverGame += OverGame;
+        }
 
         private void Update()
         {
@@ -21,14 +28,32 @@ namespace Prototype.Gameplay.ActiveArea
             transform.Translate(Vector3.left * (speedMove * Time.deltaTime));
         }
 
-        public void Activate()
+        public void Activate(Vector3 position)
         {
+            transform.position = position;
+            
             _isActive = true;
         }
 
-        public void Deactivate()
+        public void Reset()
         {
             _isActive = false;
+            
+            transform.localPosition = Vector3.zero;
+        }
+
+        private void OverGame()
+        {
+            GameplayPool.Single.ReturnObstacle(this);
+        }
+        
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!_isActive)
+                return;
+            
+            if (other.GetComponent<ActiveArea>())
+                GameplayPool.Single.ReturnObstacle(this);
         }
     }
 }

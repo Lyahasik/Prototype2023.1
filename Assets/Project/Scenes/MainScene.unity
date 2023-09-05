@@ -286,6 +286,8 @@ MonoBehaviour:
   minDelaySpawn: 0.2
   maxDelaySpawn: 1.5
   obstaclesParent: {fileID: 1424098082}
+  minShiftY: -2
+  maxShiftY: 2
 --- !u!212 &176487843
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -790,6 +792,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6341709560843501022, guid: f9fd2b399674d4240b280178fa473725, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8528764021564669880, guid: f9fd2b399674d4240b280178fa473725, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1013,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc286a17a253b443bae1f5f797b44bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabObstacle: {fileID: 1851976796956188443, guid: e85837f97b109f8429f56286c0747965, type: 3}
+  prefabObstacle: {fileID: 8180999977442852784, guid: e85837f97b109f8429f56286c0747965, type: 3}
 --- !u!1 &1213190884
 GameObject:
   m_ObjectHideFlags: 0
