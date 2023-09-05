@@ -10,7 +10,11 @@ namespace Prototype.Gameplay.ActiveArea
         
         private bool _isActive;
 
-        public bool IsActive => _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set => _isActive = value;
+        }
 
         private void OnEnable()
         {
