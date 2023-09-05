@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using Prototype.Gameplay.Player;
@@ -10,6 +11,10 @@ namespace Prototype.Core
         private bool _isStarted;
 
         public static ProcessingGame Single;
+        
+        public static event Action OnOverGame;
+
+        public bool IsStarted => _isStarted;
 
         private void Awake()
         {
@@ -28,15 +33,14 @@ namespace Prototype.Core
             
             PlayerMovement.Single.Activate();
 
-            UIHandler.Single.SetPromptActive(false);
+            UIHandler.Single.DeactivatePrompt();
             _isStarted = true;
         }
         
         public void OverGame()
         {
-            PlayerMovement.Single.Reset();
+            OnOverGame?.Invoke();
 
-            UIHandler.Single.SetPromptActive(true);
             _isStarted = false;
         }
     }

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Prototype.Core;
+
 namespace Prototype.UI.Core
 {
     public class UIHandler : MonoBehaviour
@@ -13,9 +15,19 @@ namespace Prototype.UI.Core
             Single = this;
         }
 
-        public void SetPromptActive(bool value)
+        private void OnEnable()
         {
-            textPromptStartGame.SetActive(value);
+            ProcessingGame.OnOverGame += OverGame;
+        }
+
+        private void OverGame()
+        {
+            textPromptStartGame.SetActive(true);
+        }
+
+        public void DeactivatePrompt()
+        {
+            textPromptStartGame.SetActive(false);
         }
     }
 }

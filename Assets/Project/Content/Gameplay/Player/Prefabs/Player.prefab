@@ -140,7 +140,7 @@ MonoBehaviour:
   effectMovement: {fileID: 1734465670780437884}
   gravityMin: -9.7
   gravityMax: 9.7
-  gravityRateChange: 0.07
+  gravityRateChange: 0.04
 --- !u!1001 &4612687473790240523
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -34,6 +34,8 @@ namespace Prototype.Gameplay.Player
         {
             InputController.OnTouchDown += GravityOn;
             InputController.OnTouchUp += GravityOff;
+
+            ProcessingGame.OnOverGame += Reset;
         }
 
         private void Update()
