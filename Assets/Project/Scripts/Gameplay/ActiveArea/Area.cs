@@ -2,5 +2,5 @@ using UnityEngine;
 
 namespace Prototype.Gameplay.ActiveArea
 {
-    public class ActiveArea : MonoBehaviour {}
+    public class Area : MonoBehaviour {}
 }

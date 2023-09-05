@@ -3,6 +3,7 @@ using UnityEngine;
 
 using Prototype.Gameplay.Player;
 using Prototype.UI.Core;
+using Prototype.UI.Progress;
 
 namespace Prototype.Core
 {
@@ -40,6 +41,7 @@ namespace Prototype.Core
         public void OverGame()
         {
             OnOverGame?.Invoke();
+            CoinsManager.UpdateValue(0);
 
             _isStarted = false;
         }

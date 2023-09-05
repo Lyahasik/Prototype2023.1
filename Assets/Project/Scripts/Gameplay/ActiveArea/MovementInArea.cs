@@ -9,7 +9,9 @@ namespace Prototype.Gameplay.ActiveArea
         [SerializeField] private float speedMove;
         
         private bool _isActive;
-        
+
+        public bool IsActive => _isActive;
+
         private void OnEnable()
         {
             ProcessingGame.OnOverGame += OverGame;
@@ -41,10 +43,10 @@ namespace Prototype.Gameplay.ActiveArea
             
             transform.localPosition = Vector3.zero;
         }
-
+        
         private void OverGame()
         {
-            GameplayPool.Single.ReturnObstacle(this);
+            GameplayPool.Single.ReturnObstacle(PooledObjectType.Obstacle, this);
         }
         
         private void OnTriggerExit2D(Collider2D other)
@@ -52,8 +54,9 @@ namespace Prototype.Gameplay.ActiveArea
             if (!_isActive)
                 return;
             
-            if (other.GetComponent<ActiveArea>())
-                GameplayPool.Single.ReturnObstacle(this);
+            if (other.GetComponent<Area>())
+                GameplayPool.Single.ReturnObstacle(PooledObjectType.Obstacle, this);
         }
+
     }
 }

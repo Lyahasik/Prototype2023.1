@@ -7,9 +7,9 @@ namespace Prototype.Gameplay
 {
     public class GameplayPool : MonoBehaviour
     {
-        [SerializeField] private MovementInArea prefabObstacle;
+        [SerializeField] private List<PooledObjectData> prefabsObject;
         
-        private readonly Stack<MovementInArea> obstacles = new ();
+        private readonly Dictionary<PooledObjectType, Stack<MovementInArea>> pooledObjects = new ();
 
         public static GameplayPool Single;
 
@@ -18,20 +18,23 @@ namespace Prototype.Gameplay
             Single = this;
         }
 
-        public MovementInArea GetObstacle()
+        public MovementInArea GetObject(PooledObjectType type)
         {
-            if (obstacles.Count == 0)
-                return Instantiate(prefabObstacle);
+            if (!pooledObjects.ContainsKey(type))
+                pooledObjects.Add(type, new Stack<MovementInArea>());
             
-            return obstacles.Pop();
+            if (pooledObjects[type].Count == 0)
+                return Instantiate(prefabsObject.Find(obj => obj.Type == type).Prefab);
+            
+            return pooledObjects[type].Pop();
         }
 
-        public void ReturnObstacle(MovementInArea obstacle)
+        public void ReturnObstacle(PooledObjectType type, MovementInArea obstacle)
         {
             obstacle.transform.parent = transform;
             obstacle.Reset();
             
-            obstacles.Push(obstacle);
+            pooledObjects[type].Push(obstacle);
         }
     }
 }
